@@ -44,10 +44,13 @@
         padding: 2px !important;
         z-index: 2000 !important; /* Memaksa ikon kontrol peta dan menu layer selalu tampil paling depan */
       }
-      /* Memaksa seluruh elemen Layer Switcher (tombol + panel daftar layer) tampil paling depan */
+      /* Memaksa SELURUH kontainer kontrol peta (termasuk menu layer) untuk selalu berada di lapisan paling depan */
+      .ol-overlaycontainer-stopevent {
+        z-index: 3000 !important;
+      }
       .layer-switcher,
       .layer-switcher .panel {
-        z-index: 3000 !important;
+        z-index: 3001 !important;
       }
     </style>
 
