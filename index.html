@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="./resources/ol.css" />
+    <link rel="stylesheet" href="resources/fontawesome-all.min.css" />
+    <link
+      href="resources/photon-geocoder-autocomplete.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./resources/ol-layerswitcher.css" />
+    <link rel="stylesheet" href="./resources/qgis2web.css" />
+    <style>
+      html,
+      body {
+        background-color: #ffffff;
+      }
+      .ol-control > * {
+        background-color: #f8f8f8 !important;
+        color: #444444 !important;
+        border-radius: 0px;
+      }
+      .ol-attribution a,
+      .gcd-gl-input::placeholder,
+      .search-layer-input-search::placeholder {
+        color: #444444 !important;
+      }
+      .search-layer-input-search {
+        background-color: #f8f8f8 !important;
+      }
+      .ol-control > *:focus,
+      .ol-control > *:hover {
+        background-color: rgba(248, 248, 248, 0.7) !important;
+      }
+      .ol-control {
+        background-color: rgba(255, 255, 255, 0.4) !important;
+        padding: 2px !important;
+      }
+    </style>
+
+    <style>
+      html,
+      body,
+      #map {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* Styling Kotak Judul */
+      #title-box {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        border-radius: 10px;
+        /* UBAH DI SINI: 6px untuk padding atas-bawah, 20px untuk kiri-kanan */
+        padding: 6px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+      }
+
+      .logo-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-right: 1.5px solid #eaeaea;
+        padding-right: 15px;
+      }
+
+      .logo-group img {
+        /* UBAH DI SINI: Tinggi logo dikecilkan agar kotak tidak ikut tertarik ke atas dan bawah */
+        height: 38px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .title-text {
+        text-align: left;
+        min-width: max-content;
+      }
+
+      /* Gaya untuk Judul Besar */
+      .judul-utama {
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        color: #333;
+        line-height: 1.1; /* Jarak baris dirapatkan */
+        margin-bottom: 2px; /* Jarak antara judul dan sub-judul dirapatkan */
+        white-space: nowrap;
+      }
+
+      /* Gaya untuk Tulisan Kecil (Sub-judul) */
+      .sub-judul {
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        font-weight: normal;
+        color: #555555;
+        line-height: 1.2; /* Jarak baris dirapatkan */
+        white-space: nowrap;
+      }
+
+      /* Responsif untuk layar HP */
+      @media (max-width: 600px) {
+        #title-box {
+          top: 15px;
+          flex-direction: column;
+          width: 90%;
+          padding: 15px;
+        }
+        .logo-group {
+          border-right: none;
+          border-bottom: 2px solid #eaeaea;
+          padding-right: 0;
+          padding-bottom: 10px;
+        }
+        .title-text {
+          min-width: auto;
+        }
+        .title-text,
+        .judul-utama,
+        .sub-judul {
+          text-align: center;
+          white-space: normal; /* Mengizinkan teks patah di HP agar tidak meluber */
+        }
+      }
+    </style>
+    <title>Peta Administrasi Desa Dane Rase</title>
+  </head>
+  <body>
+    <!-- KOTAK JUDUL MELAYANG -->
+    <div id="title-box">
+      <div class="logo-group">
+        <img src="img/lotim.png" alt="Logo Pemkab Lotim" />
+        <!-- Gunakan gambar transparan untuk logo STMIK Syaikh Zainuddin NW Anjani -->
+        <img src="img/kampus.png" alt="Logo Kampus" />
+        <img src="img/kkn.png" alt="Logo KKN" />
+      </div>
+      <div class="title-text">
+        <!-- Penggunaan <br> untuk memutus baris secara manual -->
+        <div class="judul-utama">PETA ADMINISTRASI<br />DESA DANE RASE</div>
+        <div class="sub-judul">
+          Oleh Tim KKN Kelompok III<br />STMIK Syaikh Zainuddin NW Anjani<br />Tahun
+          2026
+        </div>
+      </div>
+    </div>
+    <!-- INI TAG PENUTUP YANG HILANG SEBELUMNYA -->
+
+    <div id="map">
+      <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="resources/qgis2web_expressions.js"></script>
+    <script src="./resources/functions.js"></script>
+    <script src="./resources/ol.js"></script>
+    <script src="./resources/ol-layerswitcher.js"></script>
+    <script src="resources/photon-geocoder-autocomplete.min.js"></script>
+    <script src="resources/olms.js"></script>
+    <script src="layers/BATASDESAKELURAHAN_3.js"></script>
+    <script src="layers/BATASKECAMATAN_4.js"></script>
+    <script src="layers/BATASDESADANERASE_5.js"></script>
+    <script src="layers/Irigasi_6.js"></script>
+    <script src="layers/JARINGANJALAN_7.js"></script>
+    <script src="layers/FASILITASUMUM_8.js"></script>
+    <script src="styles/BATASDESAKELURAHAN_3_style.js"></script>
+    <script src="styles/BATASKECAMATAN_4_style.js"></script>
+    <script src="styles/BATASDESADANERASE_5_style.js"></script>
+    <script src="styles/Irigasi_6_style.js"></script>
+    <script src="styles/JARINGANJALAN_7_style.js"></script>
+    <script src="styles/FASILITASUMUM_8_style.js"></script>
+    <script src="./layers/layers.js" type="text/javascript"></script>
+    <script src="./resources/Autolinker.min.js"></script>
+    <script src="./resources/qgis2web.js"></script>
+  </body>
+</html>
