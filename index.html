@@ -42,6 +42,7 @@
       .ol-control {
         background-color: rgba(255, 255, 255, 0.4) !important;
         padding: 2px !important;
+        z-index: 2000 !important; /* Memaksa ikon kontrol peta dan menu layer selalu tampil paling depan */
       }
     </style>
 
@@ -63,7 +64,6 @@
         transform: translateX(-50%);
         background-color: white;
         border-radius: 10px;
-        /* UBAH DI SINI: 6px untuk padding atas-bawah, 20px untuk kiri-kanan */
         padding: 6px 20px;
         display: flex;
         align-items: center;
@@ -81,7 +81,6 @@
       }
 
       .logo-group img {
-        /* UBAH DI SINI: Tinggi logo dikecilkan agar kotak tidak ikut tertarik ke atas dan bawah */
         height: 38px;
         width: auto;
         object-fit: contain;
@@ -98,8 +97,8 @@
         font-size: 15px;
         font-weight: bold;
         color: #333;
-        line-height: 1.1; /* Jarak baris dirapatkan */
-        margin-bottom: 2px; /* Jarak antara judul dan sub-judul dirapatkan */
+        line-height: 1.1;
+        margin-bottom: 2px;
         white-space: nowrap;
       }
 
@@ -109,23 +108,28 @@
         font-size: 11px;
         font-weight: normal;
         color: #555555;
-        line-height: 1.2; /* Jarak baris dirapatkan */
+        line-height: 1.2;
         white-space: nowrap;
       }
 
-      /* Responsif untuk layar HP */
+      /* Responsif untuk layar HP (Tetap di atas, lebar dipangkas) */
       @media (max-width: 600px) {
         #title-box {
-          top: 15px;
+          top: 10px;
           flex-direction: column;
-          width: 90%;
-          padding: 15px;
+          width: max-content;
+          max-width: 65%; /* Mengamankan ruang kiri dan kanan dari ikon peta */
+          padding: 8px 12px;
+          gap: 5px;
         }
         .logo-group {
           border-right: none;
-          border-bottom: 2px solid #eaeaea;
+          border-bottom: 1.5px solid #eaeaea;
           padding-right: 0;
-          padding-bottom: 10px;
+          padding-bottom: 5px;
+        }
+        .logo-group img {
+          height: 30px;
         }
         .title-text {
           min-width: auto;
@@ -134,7 +138,14 @@
         .judul-utama,
         .sub-judul {
           text-align: center;
-          white-space: normal; /* Mengizinkan teks patah di HP agar tidak meluber */
+          white-space: normal;
+        }
+        .judul-utama {
+          font-size: 13px;
+          line-height: 1.1;
+        }
+        .sub-judul {
+          font-size: 9px;
         }
       }
     </style>
@@ -145,12 +156,10 @@
     <div id="title-box">
       <div class="logo-group">
         <img src="img/lotim.png" alt="Logo Pemkab Lotim" />
-        <!-- Gunakan gambar transparan untuk logo STMIK Syaikh Zainuddin NW Anjani -->
         <img src="img/kampus.png" alt="Logo Kampus" />
         <img src="img/kkn.png" alt="Logo KKN" />
       </div>
       <div class="title-text">
-        <!-- Penggunaan <br> untuk memutus baris secara manual -->
         <div class="judul-utama">PETA ADMINISTRASI<br />DESA DANE RASE</div>
         <div class="sub-judul">
           Oleh Tim KKN Kelompok III<br />STMIK Syaikh Zainuddin NW Anjani<br />Tahun
@@ -158,8 +167,8 @@
         </div>
       </div>
     </div>
-    <!-- INI TAG PENUTUP YANG HILANG SEBELUMNYA -->
 
+    <!-- ELEMEN POPUP DAN PETA (DIJAGA AGAR TIDAK HILANG) -->
     <div id="map">
       <div id="popup" class="ol-popup">
         <a href="#" id="popup-closer" class="ol-popup-closer"></a>
